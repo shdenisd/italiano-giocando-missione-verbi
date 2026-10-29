@@ -1,0 +1,242 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#315da3">
+<title>Italiano Giocando · Missione Verbi</title>
+<style>
+:root{--ink:#23446b;--blue:#315da3;--peach:#fff1e5;--card:#fffdfb;--muted:#63758b;--orange:#ffb74b;--green:#237f6c;--pink:#e96f92;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--peach)}
+*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer;border:0;border-radius:15px;padding:13px 16px;font-weight:750;transition:transform .12s,filter .12s}button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,input:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}
+header{background:linear-gradient(120deg,#315da3,#6584be);color:white;padding:23px 18px 28px}header>div{max-width:760px;margin:auto}header small{letter-spacing:2px;font-size:10px;font-weight:800}h1{margin:6px 0;font-size:clamp(27px,5vw,38px)}main{max-width:760px;margin:-12px auto 0;padding:0 15px 30px}.card{background:var(--card);border-radius:23px;padding:22px;margin:0 0 18px;box-shadow:0 10px 32px #24436b16;border:1px solid #ffffff}h2{margin:0 0 9px;font-size:23px}h3{margin:14px 0 7px}.muted{color:var(--muted);line-height:1.55}.small{font-size:13px}.top,.between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.pill{display:inline-block;background:#e8effa;color:#315da3;border-radius:99px;padding:8px 12px;font-weight:800;font-size:13px}.orange{background:#ffb74b;color:#593b11}.blue{background:var(--blue);color:white}.pink{background:#f9dbe6;color:#8c3252}.secondary{background:#eaf0f9;color:#315da3}.wide{width:100%;margin-top:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:17px 0}.stat{background:#edf3fc;border-radius:15px;padding:12px 7px;text-align:center;font-size:12px}.stat strong{display:block;font-size:23px}.route{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.route button{text-align:left;min-height:67px}.route small{display:block;font-size:11px;margin-top:5px;font-weight:500}.route .complete{background:#def5ea;color:#176b56}.route .locked{background:#e9ebef;color:#7a8698}.progress{height:11px;background:#e9edf5;border-radius:20px;overflow:hidden}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#ffb74b,#e96f92);transition:width .3s}.mascot{font-size:65px;text-align:center;margin:12px 0}.question{background:#edf3fb;border-radius:17px;padding:22px 15px;font-size:clamp(19px,4vw,26px);text-align:center;font-weight:750;margin:15px 0}.bigform{font-size:35px;text-align:center;font-weight:850;padding:18px;background:#e9f7ef;border-radius:17px;margin:12px 0}.pron{color:#e16c90}.entry{display:block;width:100%;border:2px solid #b4c6e2;border-radius:16px;padding:15px;font-size:24px;text-align:center;color:var(--ink);background:white;outline:none}.entry:focus{border-color:var(--blue)}.feedback{border-radius:15px;padding:15px;line-height:1.55;margin:14px 0;background:#fff0df;border:1px solid #f6c891}.feedback.good{background:#e1f6e9;border-color:#98d7b1}.feedback strong{display:block;margin-bottom:4px}.row{display:flex;gap:8px;align-items:center}.row button{flex:1}.tiny{font-size:12px;color:var(--muted)}.grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.formtile{background:#f0f4fb;padding:10px;border-radius:12px;text-align:center;font-size:14px}.formtile b{display:block;font-size:17px}.teacherrow{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #e6e9ef;padding:10px 0}.tag{background:#fce4eb;color:#903e58;padding:4px 9px;border-radius:99px;font-size:12px}.hidden{display:none!important}.footer{text-align:center;font-size:12px;color:#6b7b8e;margin:22px 0}details{margin-top:15px}summary{cursor:pointer;font-weight:700}#confetti{font-size:30px;text-align:center}#home,#game,#teacher{scroll-margin-top:12px}@media(max-width:420px){.card{padding:17px}.route{gap:7px}.route button{padding:12px;font-size:13px}.stats{gap:5px}.stat strong{font-size:19px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><div><small>ITALIANO GIOCANDO · A1 → A2</small><h1>🇮🇹 Missione Verbi</h1><div>60 форм · 120 разных предложений · 5 блоков и финал.</div></div></header>
+<main>
+<section id="home"><div class="card">
+<div class="between"><h2>🗺️ Карта приключения</h2><span class="pill" id="score"></span></div>
+<p class="muted">Все 10 глаголов за одно занятие: по два в блоке, затем смешанная миссия. Пауза возможна после каждого блока — без ожидания до завтра.</p>
+<div class="stats" id="stats"></div><div id="route" class="route"></div><p class="tiny">После каждой миссии можно продолжить сразу. Все 16 этапов доступны в рамках одного занятия.</p>
+<button class="wide pink" id="errorsBtn">🧠 Мои ошибки</button>
+<button class="wide secondary" id="dailyBtn">📅 Повторение на сегодня</button>
+<button class="wide secondary" id="teacherBtn">📊 Для преподавателя</button>
+<details><summary>⚙️ Настройки и данные</summary>
+<p class="muted small">Прогресс хранится только в этом браузере. Для переноса на другой телефон экспортируй файл прогресса.</p>
+<button id="exportBtn" class="secondary">⬇️ Экспорт прогресса</button>
+<button id="importBtn" class="secondary">⬆️ Импорт прогресса</button><input id="importFile" type="file" accept=".json,application/json" hidden>
+<button id="resetBtn" class="pink">Сбросить прогресс</button></details>
+</div></section>
+<section id="game" class="hidden"><div class="card">
+<div class="between"><button class="secondary" id="backBtn">← Карта</button><span class="pill" id="counter"></span><span class="pill" id="xp"></span></div>
+<div class="progress" style="margin-top:15px"><div id="bar"></div></div>
+<div class="mascot" id="mascot" aria-hidden="true">🦊</div>
+<h2 id="title"></h2><p class="muted" id="instruction"></p>
+<div id="content"></div><div id="feedback" aria-live="polite"></div><div id="controls"></div>
+</div></section>
+<section id="teacher" class="hidden"><div class="card"><button class="secondary" id="teacherBack">← Карта</button><h2 style="margin-top:16px">📊 Отчёт для преподавателя</h2><p class="muted">Чаще всего ошибается в этих формах. Данные доступны только на этом устройстве.</p><div id="teacherContent"></div></div></section>
+<div class="footer">Italiano Giocando · Presente indicativo · Учимся без страха ошибок 💛</div>
+</main><script>
+const verbs=[{v:'andare',ru:'идти / ехать',f:['vado','vai','va','andiamo','andate','vanno']},{v:'fare',ru:'делать',f:['faccio','fai','fa','facciamo','fate','fanno']},{v:'stare',ru:'находиться / чувствовать себя',f:['sto','stai','sta','stiamo','state','stanno']},{v:'essere',ru:'быть',f:['sono','sei','è','siamo','siete','sono']},{v:'avere',ru:'иметь',f:['ho','hai','ha','abbiamo','avete','hanno']},{v:'venire',ru:'приходить / приезжать',f:['vengo','vieni','viene','veniamo','venite','vengono']},{v:'potere',ru:'мочь',f:['posso','puoi','può','possiamo','potete','possono']},{v:'volere',ru:'хотеть',f:['voglio','vuoi','vuole','vogliamo','volete','vogliono']},{v:'dovere',ru:'быть должным',f:['devo','devi','deve','dobbiamo','dovete','devono']},{v:'sapere',ru:'знать / уметь',f:['so','sai','sa','sappiamo','sapete','sanno']}];
+const pron=['io','tu','lui / lei','noi','voi','loro'];const groups=[[0],[1],[0,1],[3],[4],[3,4],[2],[5],[2,5],[6],[7],[6,7],[8],[9],[8,9],[0,1,3,4,2,5,6,7,8,9]];const labels=['ANDARE','FARE','🔀 Andare + Fare','ESSERE','AVERE','🔀 Essere + Avere','STARE','VENIRE','🔀 Stare + Venire','POTERE','VOLERE','🔀 Potere + Volere','DOVERE','SAPERE','🔀 Dovere + Sapere','🏆 Grande finale'];const examples={andare:['Ogni mattina io ___ al bar.','Tu ___ spesso al cinema?','Giulia ___ a scuola.','Noi ___ a Firenze.','Voi ___ in centro?','I miei amici ___ al mare.'],fare:['Io ___ colazione alle otto.','Tu ___ yoga?','Marco ___ la spesa.','Noi ___ una passeggiata.','Voi ___ fotografie?','Loro ___ una festa.'],stare:['Io ___ bene, grazie.','Come ___ oggi?','Giulia ___ a casa.','Noi ___ in albergo.','Come ___, ragazzi?','I bambini ___ in giardino.'],essere:['Io ___ italiana.','Tu ___ felice?','Il bar ___ aperto.','Noi ___ in vacanza.','Voi ___ pronti?','Loro ___ studenti.'],avere:['Io ___ fame.','Tu ___ tempo?','Marco ___ una macchina.','Noi ___ due biglietti.','Voi ___ sete?','I turisti ___ una mappa.'],venire:['Io ___ con te.','Tu ___ alla festa?','Sara ___ da Roma.','Noi ___ dalla Russia.','Voi ___ a cena?','Gli amici ___ domani.'],potere:['Io ___ entrare?','Tu ___ aiutarmi?','Lei ___ pagare.','Noi ___ partire.','Voi ___ venire?','Loro ___ visitare il museo.'],volere:['Io ___ un caffè.','Tu ___ una pizza?','Lei ___ un gelato.','Noi ___ viaggiare.','Voi ___ partire?','Loro ___ dormire.'],dovere:['Io ___ studiare.','Tu ___ lavorare.','Lui ___ partire.','Noi ___ prenotare.','Voi ___ aspettare.','Loro ___ tornare.'],sapere:['Io ___ nuotare.','Tu ___ cucinare?','Lei ___ parlare italiano.','Noi ___ la risposta.','Voi ___ dove si trova la stazione?','Loro ___ leggere.']};
+const extraExamples={"andare":[["Io ___ al lavoro in metro.","Ogni sabato io ___ al mercato."],["Tu ___ in palestra dopo scuola?","Stasera tu ___ da Marco?"],["Mia sorella ___ in biblioteca.","Il treno ___ a Milano."],["Noi ___ al parco dopo pranzo.","Domani noi ___ al museo."],["Voi ___ a lezione oggi?","Domenica voi ___ in montagna?"],["I ragazzi ___ a teatro.","Le mie amiche ___ in piscina."]],"fare":[["Io ___ una torta per Anna.","La domenica io ___ sport."],["Tu ___ i compiti dopo cena?","Che cosa ___ nel weekend?"],["Mia madre ___ il caffè.","Luca ___ una domanda."],["Noi ___ una pausa alle undici.","Oggi noi ___ una fotografia."],["Voi ___ una passeggiata?","Quando ___ colazione, ragazzi?"],["I bambini ___ un disegno.","Le ragazze ___ una sorpresa."]],"essere":[["Io ___ molto stanca oggi.","Oggi io ___ a casa."],["Tu ___ di Roma?","Perché tu ___ triste?"],["Marta ___ una studentessa.","Questo libro ___ interessante."],["Noi ___ in ritardo.","Oggi noi ___ molto contenti."],["Voi ___ italiani?","Ragazzi, ___ pronti per partire?"],["I miei amici ___ simpatici.","Le chiavi ___ sul tavolo."]],"avere":[["Io ___ ventotto anni.","Oggi io ___ molto sonno."],["Tu ___ una penna?","Quanti fratelli ___ tu?"],["Marta ___ un cane piccolo.","Il mio amico ___ freddo."],["Noi ___ un appuntamento.","Oggi noi ___ poco tempo."],["Voi ___ una domanda?","Ragazzi, ___ i biglietti?"],["I miei genitori ___ una casa al mare.","Le ragazze ___ fame."]],"stare":[["Oggi io ___ a casa.","Io ___ molto bene, grazie."],["Come ___, Giulia?","Tu ___ qui con noi?"],["Paolo ___ male oggi.","La nonna ___ in giardino."],["Noi ___ qui fino alle sei.","Oggi noi ___ benissimo."],["Come ___ voi oggi?","Ragazzi, ___ in albergo?"],["I miei amici ___ bene.","I bambini ___ in camera."]],"venire":[["Io ___ a cena da te.","Domani io ___ con voi."],["Tu ___ al concerto stasera?","A che ora ___ a casa mia?"],["Il professore ___ alle nove.","Mia sorella ___ con noi."],["Noi ___ in treno.","Stasera noi ___ alla festa."],["Voi ___ al cinema con noi?","Quando ___ a trovarci?"],["I miei cugini ___ domenica.","Le amiche di Sara ___ da Napoli."]],"potere":[["Io ___ aprire la finestra?","Oggi io ___ studiare."],["Tu ___ chiudere la porta?","Mi ___ chiamare domani?"],["Anna ___ parlare adesso.","Il bambino ___ entrare?"],["Noi ___ comprare i biglietti.","Oggi noi ___ uscire prima."],["Voi ___ aspettare un minuto?","Ragazzi, ___ aiutarmi?"],["I turisti ___ visitare il castello.","I bambini ___ giocare fuori."]],"volere":[["Io ___ un bicchiere d’acqua.","Stasera io ___ restare a casa."],["Tu ___ ascoltare questa canzone?","Che cosa ___ per cena?"],["Marta ___ studiare italiano.","Il bambino ___ un gelato."],["Noi ___ visitare Roma.","Oggi noi ___ cucinare insieme."],["Voi ___ un altro caffè?","Ragazzi, ___ venire con noi?"],["I miei amici ___ ballare.","I bambini ___ andare al parco."]],"dovere":[["Io ___ comprare il pane.","Domani io ___ alzarmi presto."],["Tu ___ finire il lavoro?","A che ora ___ partire?"],["Marta ___ studiare per l’esame.","Il medico ___ arrivare presto."],["Noi ___ fare la spesa.","Oggi noi ___ lavorare molto."],["Voi ___ prendere il treno?","Ragazzi, ___ essere puntuali."],["I ragazzi ___ tornare a casa.","Le studentesse ___ leggere il testo."]],"sapere":[["Io ___ parlare un po’ di francese.","Io ___ dove abita Luca."],["Tu ___ usare questo programma?","___ dove si trova il museo?"],["Marta ___ suonare il piano.","Il professore ___ la risposta."],["Noi ___ cucinare la pasta.","Noi ___ quando parte il treno."],["Voi ___ parlare spagnolo?","Ragazzi, ___ chi è quella donna?"],["I miei amici ___ ballare il tango.","I bambini ___ contare fino a dieci."]]};
+
+
+
+
+
+const $=id=>document.getElementById(id);
+const KEY='italiano-missione-verbi-v6', OLD='italiano-missione-verbi-v5';
+const defaults=()=>({done:[],xp:0,errors:{},mastery:{},due:{},attempts:0,correct:0,awards:0,history:[]});
+let saved=defaults();
+try{const x=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLD)||'null');if(x&&typeof x==='object')saved={...defaults(),...x,done:[]}}catch(e){}
+let queue=[],idx=0,groupIndex=0,mode='normal',attempt=0,answered=false,sessionMistakes=0,seen=new Set();
+const kOf=q=>q.v+':'+q.p;
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function store(){try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function space(arr,last=''){
+ const pool=shuffle(arr),out=[];
+ while(pool.length){
+  const options=pool.map((q,i)=>({q,i})).filter(o=>verbs[o.q.v].f[o.q.p]!==last);
+  const choices=options.length?options:pool.map((q,i)=>({q,i}));
+  const chosen=choices[Math.floor(Math.random()*choices.length)];
+  out.push(chosen.q);last=verbs[chosen.q.v].f[chosen.q.p];pool.splice(chosen.i,1);
+ }
+ return out;
+}
+function show(id){for(const s of ['home','game','teacher'])$(s).classList.toggle('hidden',s!==id);window.scrollTo({top:0,behavior:'instant'})}
+function home(){renderHome();show('home')}
+function renderHome(){
+ $('score').textContent='⭐ '+saved.xp+' XP';
+ const learned=Object.values(saved.mastery).filter(x=>x>=3).length;
+ const due=Object.keys(saved.due).filter(k=>saved.due[k]<=Date.now()).length;
+ $('stats').innerHTML=`<div class="stat"><strong>${learned}/60</strong>освоено</div><div class="stat"><strong>${due}</strong>к повторению</div><div class="stat"><strong>${saved.attempts?Math.round(saved.correct/saved.attempts*100):0}%</strong>с первого раза</div>`;
+ $('route').innerHTML='';
+ groups.forEach((g,i)=>{
+  const available=i===0||saved.done.includes(i-1)||saved.done.includes(i);
+  const btn=document.createElement('button');
+  btn.className=saved.done.includes(i)?'complete':available?'orange':'locked';
+  btn.disabled=!available;
+  btn.innerHTML=`${saved.done.includes(i)?'✓ ':available?'▶ ':'🔒 '}${escapeHTML(labels[i])}<small>${g.length===1?'6 форм · одна за раз':g.length===2?'Два глагола вместе':'Все 10 глаголов'}</small>`;
+  btn.onclick=()=>start(i);$('route').appendChild(btn);
+ });
+ const n=Object.values(saved.errors).filter(x=>x>0).length;
+ $('errorsBtn').textContent=`🧠 Мои ошибки · ${n}`;
+}
+function makeGroup(g){
+ // Each form gets two distinct contextual sentences; all prompts are shuffled
+ // and spaced so the same verb+person does not appear twice in a row.
+ const sentenceTasks=[];
+ for(const v of g)for(let p=0;p<6;p++){
+   const variants=extraExamples[verbs[v].v][p];
+   for(let variant=0;variant<2;variant++)sentenceTasks.push({v,p,kind:'sentence',variant});
+ }
+ const context=space(sentenceTasks);
+ if(g.length===1){
+   const v=g[0];
+   const intro=Array.from({length:6},(_,p)=>({v,p,kind:'learn'}));
+   // Introduce forms once, then two fresh sentences per person.
+   return intro.concat(context);
+ }
+ return context;
+}
+function start(i){groupIndex=i;mode='normal';queue=makeGroup(groups[i]);idx=0;sessionMistakes=0;seen=new Set();show('game');renderTask()}
+function startReview(kind){
+ const keys=Object.keys(kind==='errors'?saved.errors:saved.due).filter(k=>kind==='errors'?saved.errors[k]>0:saved.due[k]<=Date.now());
+ if(!keys.length){alert(kind==='errors'?'Пока нет ошибок — это отлично!':'Пока нечего повторять. Можно пройти следующую миссию.');return}
+ queue=space(keys.slice(0,24).map(k=>{const [v,p]=k.split(':').map(Number);return {v,p,kind:'write'}}));
+ idx=0;sessionMistakes=0;mode=kind;seen=new Set();show('game');renderTask();
+}
+function button(label,handler,klass='blue wide'){
+ const b=document.createElement('button');b.textContent=label;b.className=klass;b.addEventListener('click',handler);$('controls').appendChild(b);return b;
+}
+function speak(value){
+ if(!('speechSynthesis' in window))return;
+ window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(value);u.lang='it-IT';u.rate=.82;window.speechSynthesis.speak(u);
+}
+function renderTask(){
+ answered=false;attempt=0;$('feedback').innerHTML='';$('controls').innerHTML='';
+ $('bar').style.width=Math.round(idx/queue.length*100)+'%';
+ $('counter').textContent=`${Math.min(idx+1,queue.length)} / ${queue.length}`;$('xp').textContent='⭐ '+saved.xp;
+ if(idx>=queue.length){finish();return}
+ const q=queue[idx],v=verbs[q.v],form=v.f[q.p];
+ $('title').textContent=v.v.toUpperCase()+' · '+v.ru;
+ $('mascot').textContent=['🦊','🐱','🐻','🐼'][Math.floor(idx/4)%4];
+ const titles={learn:'Посмотри, произнеси и спрячь. Затем напиши форму по памяти.',write:'Вспомни форму без вариантов ответа.',missing:'Восстанови пропущенные буквы.',sentence:'Впиши форму в предложение.'};
+ $('instruction').textContent=titles[q.kind];
+ const content=$('content');
+ if(q.kind==='learn'){
+  content.innerHTML=`<div class="bigform"><span class="pron">${escapeHTML(pron[q.p])}</span> → ${form}</div><div class="grid6">${pron.map((p,i)=>`<div class="formtile">${p}<b>${i===q.p?v.f[i]:'•••'}</b></div>`).join('')}</div>`;
+  button('🔊 Послушать',()=>speak(pron[q.p]+' '+form),'secondary');
+  button('🙈 Спрятать и написать',()=>{
+   content.innerHTML=`<div class="question">${escapeHTML(pron[q.p])} → ?</div><input id="answer" class="entry" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Напиши форму" aria-label="Ответ">`;
+   $('controls').innerHTML='';inputButton();$('answer').focus();
+  });
+ }else{
+  const prompt=q.kind==='sentence'?(q.variant===undefined?examples[v.v][q.p]:extraExamples[v.v][q.p][q.variant]):pron[q.p]+' → ?';
+  const hint=q.kind==='missing'?`<div class="pill">Подсказка: ${form.replace(/[aeiouàèéìòù]/gi,'_')}</div>`:'';
+  content.innerHTML=`<div class="question">${escapeHTML(prompt)}</div>${hint}<input id="answer" class="entry" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Напиши форму" aria-label="Ответ">`;
+  inputButton();$('answer').focus();
+ }
+}
+function inputButton(){
+ button('Проверить ответ ✓',check);
+ $('answer').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check()}});
+}
+function explain(q,answer){
+ const v=verbs[q.v],correct=v.f[q.p];
+ const matches=pron.map((p,i)=>({p,i})).filter(x=>v.f[x.i]===answer&&x.i!==q.p);
+ const contrast=matches.length?`Форма «${answer}» подходит для ${matches.map(x=>x.p).join(' / ')}, а здесь нужно ${pron[q.p]}.`:`Это особая форма глагола ${v.v}; её нужно запомнить целиком.`;
+ return `<strong>Попробуем ещё 💛</strong><div>Правильно: <b>${pron[q.p]} ${correct}</b>. ${escapeHTML(contrast)}</div><div class="tiny">Произнеси пару вслух. Если снова ошибёшься, мы вернёмся к ней позже.</div>`;
+}
+function updateMemory(key,success){
+ let n=saved.mastery[key]||0;
+ if(success){
+  n=Math.min(5,n+1);saved.mastery[key]=n;
+  saved.due[key]=Date.now()+[0,2*60e3,1*864e5,3*864e5,7*864e5,14*864e5][n];
+  if(saved.errors[key])saved.errors[key]=Math.max(0,saved.errors[key]-1);
+ }else{
+  saved.mastery[key]=Math.max(0,n-1);
+  saved.errors[key]=(saved.errors[key]||0)+1;
+  saved.due[key]=Date.now()+2*60e3;
+ }
+}
+function check(){
+ if(answered)return;
+ const input=$('answer');if(!input)return;
+ const answer=input.value.trim().toLocaleLowerCase('it');
+ if(!answer){input.focus();return}
+ const q=queue[idx],expected=verbs[q.v].f[q.p],key=kOf(q);
+ if(answer===expected){
+  answered=true;input.disabled=true;
+  saved.attempts++;
+  if(attempt===0){saved.correct++;saved.xp+=10;updateMemory(key,true)}
+  else saved.xp+=3;
+  $('mascot').textContent='🥳';
+  $('feedback').innerHTML=`<div class="feedback good"><strong>Bravissima! ${escapeHTML(pron[q.p])} ${expected}</strong>${attempt===0?'Вспомнила сама — супер!':'Отлично, теперь получилось!'}</div>`;
+  $('controls').innerHTML='';
+  button('🔊 Произнести',()=>speak(pron[q.p]+' '+expected),'secondary');
+  button('Дальше →',next);
+  store();
+ }else{
+  attempt++;
+  if(attempt===1){updateMemory(key,false);sessionMistakes++}
+  $('feedback').innerHTML=`<div class="feedback">${explain(q,answer)}</div>`;
+  if(attempt>=2){
+   answered=true;input.disabled=true;saved.attempts++;
+   $('feedback').innerHTML+=`<p class="tiny">Не будем писать одно и то же много раз подряд. Вернёмся к этой форме позже.</p>`;
+   $('controls').innerHTML='';
+   button('🔊 Услышать правильную форму',()=>speak(pron[q.p]+' '+expected),'secondary');
+   button('Дальше →',next);
+  }else input.select();
+  store();
+ }
+}
+function next(){idx++;renderTask()}
+function finish(){
+ $('bar').style.width='100%';$('counter').textContent='✓';$('mascot').textContent='🏆';
+ $('title').textContent='Missione completata!';
+ $('instruction').textContent='Ещё одна миссия позади. Молодец!';
+ $('content').innerHTML=`<div class="bigform">🎉 ${saved.xp} XP всего</div><p class="muted">Ошибок в этой миссии: ${sessionMistakes}. Сложные формы сохраняются для повторения. Все блоки можно пройти за одно занятие; паузу можно сделать между ними.</p><div id="confetti">🌟 🎈 🌟</div>`;
+ $('feedback').innerHTML='';$('controls').innerHTML='';
+ if(mode==='normal'&&!saved.done.includes(groupIndex))saved.done.push(groupIndex);
+ store();
+ if(mode==='normal'&&groupIndex<groups.length-1){
+  if(groupIndex%3===2){$('content').innerHTML+='<p class="muted"><b>☕ Блок завершён!</b> Можно сделать паузу или сразу перейти к следующей паре глаголов.</p>'}
+  button('▶ Продолжить: '+labels[groupIndex+1],()=>start(groupIndex+1));
+  button('⏸ Сделать паузу · сохранить прогресс',home,'secondary wide');
+ }else{button('🗺️ На карту',home);}
+ button('🧠 Повторить ошибки',()=>startReview('errors'),'pink wide');
+}
+function teacher(){
+ const rows=[];
+ for(let v=0;v<verbs.length;v++)for(let p=0;p<6;p++){
+  const k=v+':'+p,errors=saved.errors[k]||0,level=saved.mastery[k]||0;
+  rows.push({v,p,errors,level});
+ }
+ rows.sort((a,b)=>b.errors-a.errors||a.level-b.level);
+ $('teacherContent').innerHTML=`<div class="stats"><div class="stat"><strong>${saved.attempts}</strong>ответов</div><div class="stat"><strong>${saved.correct}</strong>верных сразу</div><div class="stat"><strong>${saved.done.length}/16</strong>миссий</div></div>
+ <h3>Самые трудные формы</h3>${rows.slice(0,20).map(r=>`<div class="teacherrow"><span><b>${verbs[r.v].v}</b> · ${pron[r.p]} → ${verbs[r.v].f[r.p]}</span><span class="tag">${r.errors} ошибок · ${r.level}/5</span></div>`).join('')}
+ <p class="tiny">Уровень освоения повышается после правильного ответа с первой попытки. Для устойчивого запоминания нужны повторения в разные дни.</p>`;
+ show('teacher');
+}
+function exportData(){
+ const blob=new Blob([JSON.stringify({version:5,exportedAt:new Date().toISOString(),progress:saved},null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='italiano-giocando-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importData(file){
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const parsed=JSON.parse(reader.result),p=parsed.progress||parsed;
+   if(!Array.isArray(p.done)||typeof p.xp!=='number'||!p.mastery||!p.errors)throw Error('invalid');
+   if(!confirm('Заменить текущий прогресс данными из файла?'))return;
+   saved={...defaults(),...p};store();home();alert('Прогресс загружен.');
+  }catch(e){alert('Не удалось прочитать файл прогресса.')}
+ };reader.readAsText(file);
+}
+$('backBtn').onclick=home;$('teacherBack').onclick=home;
+$('errorsBtn').onclick=()=>startReview('errors');
+$('dailyBtn').onclick=()=>startReview('daily');
+$('teacherBtn').onclick=teacher;
+$('exportBtn').onclick=exportData;
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=e=>{if(e.target.files[0])importData(e.target.files[0])};
+$('resetBtn').onclick=()=>{if(confirm('Точно удалить весь прогресс на этом устройстве?')){saved=defaults();store();home()}};
+home();
+
+</script></body></html>
